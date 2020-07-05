@@ -16,7 +16,7 @@ const bot = new Telegraf(BOT_TOKEN);
 
 const calculate = async (ctx: TelegrafContext) => {
     const { reply, message } = ctx
-    if (message === undefined || message.text === undefined ) {
+    if (message === undefined || message.text === undefined) {
         reply("You have to send the following parameters in order and separated with one space (only numbers)");
         reply("ProductPrice ShippingCost CustomTax")
         reply("e.g: /calculate 200 50 100")
@@ -49,6 +49,9 @@ bot.command("calculate", async (ctx: TelegrafContext) => {
 bot.command("currentDolarPrice", async ({ reply }: TelegrafContext) => {
     const currentDolarPrice = await getDolarPrice();
     return reply(String(currentDolarPrice))
+})
+bot.command("contact", ({ reply }: TelegrafContext) => {
+    return reply("You can find me in [Linkedin](https://www.linkedin.com/in/matychp)", { parse_mode: "MarkdownV2" })
 })
 
 bot.help(({ reply }: TelegrafContext) => reply(`
