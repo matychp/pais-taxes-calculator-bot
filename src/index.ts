@@ -63,6 +63,10 @@ bot.command("contact", ({ reply }: TelegrafContext) => {
     return reply("You can find me in [Linkedin](https://www.linkedin.com/in/matychp)", { parse_mode: "MarkdownV2" })
 })
 
+bot.command("repo", ({ reply }: TelegrafContext) => {
+    return reply("You can find the repostiory link on Github [here](https://github.com/matychp/pais-taxes-calculator-bot)", { parse_mode: "MarkdownV2" })
+})
+
 bot.help(({ reply }: TelegrafContext) => reply(`
     Parameters:
     1. Product price: The price of the product that you want to buy.
