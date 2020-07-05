@@ -6,7 +6,8 @@
   "scripts": {
     "start": "ts-node index.js",
     "start:dev": "ts-node-dev src/index.ts",
-    "build": "tsc"
+    "build": "tsc",
+    "postinstall": "npm run build"
   },
   "keywords": [],
   "author": "Matias Lopez",
