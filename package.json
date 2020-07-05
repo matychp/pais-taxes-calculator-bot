@@ -1,0 +1,22 @@
+{
+  "name": "pais-tax-calculator-bot",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start:dev": "ts-node-dev src/index.ts"
+  },
+  "keywords": [],
+  "author": "Matias Lopez",
+  "license": "ISC",
+  "dependencies": {
+    "axios": "^0.19.2",
+    "dotenv": "^8.2.0",
+    "telegraf": "^3.38.0"
+  },
+  "devDependencies": {
+    "@types/node": "^14.0.14",
+    "ts-node-dev": "^1.0.0-pre.50",
+    "typescript": "^3.9.6"
+  }
+}
