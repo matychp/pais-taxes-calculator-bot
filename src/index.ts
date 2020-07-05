@@ -17,25 +17,29 @@ const bot = new Telegraf(BOT_TOKEN);
 const calculate = async (ctx: TelegrafContext) => {
     const { reply, message } = ctx
     if (message === undefined || message.text === undefined) {
-        reply("You have to send the following parameters in order and separated with one space (only numbers)");
-        reply("ProductPrice ShippingCost CustomTax")
-        reply("e.g: /calculate 200 50 100")
-        reply("Use /help if you don't understand what this params mean.")
-    } else {
-        const parameters = message.text.split(" ", 4).slice(1);
-
-        const [productValue = 0, shippingCost = 0, CustomTax = 0] = parameters
-
-        const currentDolarPrice = await getDolarPrice();
-
-        const total = getTotal(Number(productValue), Number(shippingCost), Number(CustomTax), currentDolarPrice)
-        const isTotalANumber = !isNaN(total);
-        if (isTotalANumber === true) {
-            reply(`The total of your buy is $${total} ARS.`)
-        } else {
-            reply(`There was some problem with your inputs, please try again.`)
-        }
+        calculateHelp(ctx);
+        return
     }
+
+    const parameters = message.text.split(" ", 4).slice(1);
+
+    if (parameters.length < 1) {
+        calculateHelp(ctx);
+        return
+    }
+
+    const [productValue = 0, shippingCost = 0, CustomTax = 0] = parameters
+
+    const currentDolarPrice = await getDolarPrice();
+
+    const total = getTotal(Number(productValue), Number(shippingCost), Number(CustomTax), currentDolarPrice)
+    const isTotalANumber = !isNaN(total);
+    if (isTotalANumber === true) {
+        reply(`The total of your buy is $${total} ARS.`)
+    } else {
+        reply(`There was some problem with your inputs, please try again.`)
+    }
+
 }
 
 bot.start(({ reply }: TelegrafContext) => {
@@ -62,3 +66,11 @@ bot.help(({ reply }: TelegrafContext) => reply(`
 `));
 
 bot.launch();
+
+const calculateHelp = (ctx: TelegrafContext) => {
+    const { reply } = ctx;
+    reply("You have to send the following parameters in order and separated with one space (only numbers)");
+    reply("ProductPrice ShippingCost CustomTax");
+    reply("e.g: /calculate 200 50 100");
+    reply("Use /help if you don't understand what this params mean.");
+}
