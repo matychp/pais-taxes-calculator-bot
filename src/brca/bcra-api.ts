@@ -12,5 +12,6 @@ httpService.defaults.headers.common['Authorization'] = `BEARER ${process.env.BCR
 export const getDolarPrice = async () => {
     const { data: dolarHistory } = await httpService.get<Dolar[]>("usd")
     const lastPrice = dolarHistory[dolarHistory.length - 1].v
+    console.log({ lastPrice })
     return lastPrice
 }
