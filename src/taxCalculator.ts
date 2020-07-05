@@ -11,7 +11,7 @@ export const getTotal = (
     return total;
 };
 
-const calculateCustomDuty = (taxesPercentage, productValue) => {
+const calculateCustomDuty = (taxesPercentage: number, productValue: number) => {
     const customDuty = (taxesPercentage * productValue) / 100
     return customDuty
 }

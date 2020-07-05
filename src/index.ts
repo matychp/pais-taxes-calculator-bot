@@ -1,8 +1,8 @@
 import * as dotenv from "dotenv";
 import { Telegraf } from "telegraf";
+import { TelegrafContext } from "telegraf/typings/context";
 import { getTotal } from "./taxCalculator";
 import { getDolarPrice } from "./brca/bcra-api";
-import { TelegrafContext } from "telegraf/typings/context";
 
 dotenv.config();
 
@@ -31,20 +31,20 @@ const calculate = async ({ reply, message }: TelegrafContext) => {
     }
 }
 
-bot.start(({ reply }) => {
+bot.start(({ reply }: TelegrafContext) => {
     reply("To start use the command /calculate")
     return
 })
 
-bot.command("calculate", async ctx => {
+bot.command("calculate", async (ctx: TelegrafContext) => {
     return await calculate(ctx)
 })
-bot.command("currentDolarPrice", async ({ reply }) => {
+bot.command("currentDolarPrice", async ({ reply }: TelegrafContext) => {
     const currentDolarPrice = await getDolarPrice();
     return reply(String(currentDolarPrice))
 })
 
-bot.help(({ reply }) => reply(`
+bot.help(({ reply }: TelegrafContext) => reply(`
     Parameters:
     1. Product price: The price of the product that you want to buy.
     2. Shipping cost (optional): The cost of the shipping service (can be 0).
