@@ -6,6 +6,9 @@ import { getDolarPrice } from "./brca/bcra-api";
 
 dotenv.config();
 
+const PORT = Number(process.env.PORT) || 3000;
+const URL = process.env.URL || 'https://pais-taxes-calculator-box.herokuapp.com/';
+
 const BOT_TOKEN = process.env.BOT_TOKEN || null;
 
 if (BOT_TOKEN === null) {
@@ -13,6 +16,8 @@ if (BOT_TOKEN === null) {
 }
 
 const bot = new Telegraf(BOT_TOKEN);
+bot.telegram.setWebhook(`${URL}/bot${BOT_TOKEN}`);
+bot.startWebhook(`/bot${BOT_TOKEN}`, null, PORT);
 
 const calculate = async (ctx: TelegrafContext) => {
     const { reply, message } = ctx
