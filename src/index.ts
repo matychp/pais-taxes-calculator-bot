@@ -6,17 +6,24 @@ import { getDolarPrice } from "./brca/bcra-api";
 
 dotenv.config();
 
-const bot = new Telegraf(process.env.BOT_TOKEN);
+const BOT_TOKEN = process.env.BOT_TOKEN || null;
 
-const calculate = async ({ reply, message }: TelegrafContext) => {
-    console.log(message.text)
-    const parameters = message.text.split(" ", 4).slice(1);
-    if (parameters.length < 1) {
+if (BOT_TOKEN === null) {
+    throw Error("BOT_TOKEN is null")
+}
+
+const bot = new Telegraf(BOT_TOKEN);
+
+const calculate = async (ctx: TelegrafContext) => {
+    const { reply, message } = ctx
+    if (message === undefined || message.text === undefined ) {
         reply("You have to send the following parameters in order and separated with one space (only numbers)");
         reply("ProductPrice ShippingCost CustomTax")
         reply("e.g: /calculate 200 50 100")
         reply("Use /help if you don't understand what this params mean.")
     } else {
+        const parameters = message.text.split(" ", 4).slice(1);
+
         const [productValue = 0, shippingCost = 0, CustomTax = 0] = parameters
 
         const currentDolarPrice = await getDolarPrice();
